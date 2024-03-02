@@ -1,0 +1,14 @@
+MERGE (n:Person {id: "Tudor"}) ON CREATE SET n.name = "Tudor", n.description = "Tudor is a student who participates in various assessment tests and activities to evaluate his skills and abilities."
+MERGE (n:Person {id: "Supersona"}) ON CREATE SET n.name = "Supersona", n.description = "Supersona is an AI or virtual assistant who guides Tudor through different assessment tests and activities."
+MERGE (n:Activity {id: "Wechsler Intelligence Scale for Children"}) ON CREATE SET n.name = "Wechsler Intelligence Scale for Children", n.description = "An assessment test that evaluates a child's cognitive abilities."
+MERGE (n:Subject {id: "Biology"}) ON CREATE SET n.name = "Biology", n.description = "An academic subject that Tudor finds challenging."
+MERGE (n:Activity {id: "Strengths and Difficulties Questionnaire (SDQ)"}) ON CREATE SET n.name = "Strengths and Difficulties Questionnaire (SDQ)", n.description = "An assessment designed to understand a child's behavior, emotions, and relationships."
+MERGE (n:Activity {id: "Gifted and Talented Evaluation"}) ON CREATE SET n.name = "Gifted and Talented Evaluation", n.description = "An assessment to gauge Tudor's abilities in critical thinking, creativity, problem-solving, and advanced understanding."
+MERGE (n:Activity {id: "Emotional Intelligence (EI) Assessment"}) ON CREATE SET n.name = "Emotional Intelligence (EI) Assessment", n.description = "An assessment to understand Tudor's ability to recognize, understand, and manage his own emotions and the emotions of others."
+MERGE (n:Activity {id: "Creative ProblemSolving Test"}) ON CREATE SET n.name = "Creative Problem-Solving Test", n.description = "A test that assesses Tudor's ability to think innovatively and develop unique solutions to various scenarios."
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Wechsler Intelligence Scale for Children"}) MERGE (a)-[:isInterestedIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Subject {id: "Biology"}) MERGE (a)-[:isInterestedIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Strengths and Difficulties Questionnaire (SDQ)"}) MERGE (a)-[:isInterestedIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Gifted and Talented Evaluation"}) MERGE (a)-[:isInterestedIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Emotional Intelligence (EI) Assessment"}) MERGE (a)-[:isInterestedIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Creative ProblemSolving Test"}) MERGE (a)-[:isInterestedIn]->(b)
