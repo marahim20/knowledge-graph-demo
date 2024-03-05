@@ -1,14 +1,21 @@
-MERGE (n:Person {id: "Tudor"}) ON CREATE SET n.name = "Tudor", n.description = "Tudor is a student who participates in various assessment tests and activities to evaluate his skills and abilities."
-MERGE (n:Person {id: "Supersona"}) ON CREATE SET n.name = "Supersona", n.description = "Supersona is an AI or virtual assistant who guides Tudor through different assessment tests and activities."
-MERGE (n:Activity {id: "Wechsler Intelligence Scale for Children"}) ON CREATE SET n.name = "Wechsler Intelligence Scale for Children", n.description = "An assessment test that evaluates a child's cognitive abilities."
-MERGE (n:Subject {id: "Biology"}) ON CREATE SET n.name = "Biology", n.description = "An academic subject that Tudor finds challenging."
-MERGE (n:Activity {id: "Strengths and Difficulties Questionnaire (SDQ)"}) ON CREATE SET n.name = "Strengths and Difficulties Questionnaire (SDQ)", n.description = "An assessment designed to understand a child's behavior, emotions, and relationships."
-MERGE (n:Activity {id: "Gifted and Talented Evaluation"}) ON CREATE SET n.name = "Gifted and Talented Evaluation", n.description = "An assessment to gauge Tudor's abilities in critical thinking, creativity, problem-solving, and advanced understanding."
-MERGE (n:Activity {id: "Emotional Intelligence (EI) Assessment"}) ON CREATE SET n.name = "Emotional Intelligence (EI) Assessment", n.description = "An assessment to understand Tudor's ability to recognize, understand, and manage his own emotions and the emotions of others."
-MERGE (n:Activity {id: "Creative ProblemSolving Test"}) ON CREATE SET n.name = "Creative Problem-Solving Test", n.description = "A test that assesses Tudor's ability to think innovatively and develop unique solutions to various scenarios."
-MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Wechsler Intelligence Scale for Children"}) MERGE (a)-[:isInterestedIn]->(b)
-MATCH (a:Person {id: "Tudor"}), (b:Subject {id: "Biology"}) MERGE (a)-[:isInterestedIn]->(b)
-MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Strengths and Difficulties Questionnaire (SDQ)"}) MERGE (a)-[:isInterestedIn]->(b)
-MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Gifted and Talented Evaluation"}) MERGE (a)-[:isInterestedIn]->(b)
-MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Emotional Intelligence (EI) Assessment"}) MERGE (a)-[:isInterestedIn]->(b)
-MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Creative ProblemSolving Test"}) MERGE (a)-[:isInterestedIn]->(b)
+MERGE (n:Person {id: "Tudor"}) ON CREATE SET n.name = "Tudor", n.description = "Student at British School, born on November 1, 2012, in Year 6."
+MERGE (n:Subject {id: "Mathematics"}) ON CREATE SET n.name = "Mathematics", n.description = "Subject involving logical reasoning and problem-solving."
+MERGE (n:Subject {id: "English"}) ON CREATE SET n.name = "English", n.description = "Subject involving reading comprehension and creative writing."
+MERGE (n:Subject {id: "Science"}) ON CREATE SET n.name = "Science", n.description = "Subject involving scientific experiments and critical thinking."
+MERGE (n:Subject {id: "History"}) ON CREATE SET n.name = "History", n.description = "Subject involving understanding historical events."
+MERGE (n:Subject {id: "Geography"}) ON CREATE SET n.name = "Geography", n.description = "Subject involving geographical concepts and environmental projects."
+MERGE (n:Subject {id: "Art"}) ON CREATE SET n.name = "Art", n.description = "Subject involving creativity and expression through artwork."
+MERGE (n:Subject {id: "Physical Education"}) ON CREATE SET n.name = "Physical Education", n.description = "Subject involving team sports and individual activities."
+MERGE (n:Subject {id: "ICT"}) ON CREATE SET n.name = "ICT", n.description = "Subject involving digital literacy and responsible use of technology."
+MERGE (n:Activity {id: "Chess Club"}) ON CREATE SET n.name = "Chess Club", n.description = "Activity involving strategic thinking and patience."
+MERGE (n:Activity {id: "Environmental Club"}) ON CREATE SET n.name = "Environmental Club", n.description = "Activity involving school-wide recycling initiatives."
+MERGE (n:Activity {id: "Math Olympiad"}) ON CREATE SET n.name = "Math Olympiad", n.description = "Activity involving mathematical talent."
+MERGE (n:Person {id: "Tutor"}) ON CREATE SET n.name = "Tutor", n.description = "Teacher at British School."
+MATCH (a:Person {id: "Tudor"}), (b:Subject {id: "Mathematics"}) MERGE (a)-[:hasStrengthIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Subject {id: "Science"}) MERGE (a)-[:hasStrengthIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Subject {id: "Physical Education"}) MERGE (a)-[:hasStrengthIn]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Subject {id: "Mathematics"}) MERGE (a)-[:prefersSubject]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Chess Club"}) MERGE (a)-[:teaches]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Environmental Club"}) MERGE (a)-[:teaches]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Activity {id: "Math Olympiad"}) MERGE (a)-[:teaches]->(b)
+MATCH (a:Person {id: "Tudor"}), (b:Person {id: "Tutor"}) MERGE (a)-[:hasTeacher]->(b)

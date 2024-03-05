@@ -2,10 +2,10 @@ import streamlit as st
 from streamlit_chat import message
 from timeit import default_timer as timer
 
-from langchain.graphs import Neo4jGraph
+from langchain_community.graphs import Neo4jGraph
 from langchain.chains import GraphCypherQAChain
 from langchain.prompts.prompt import PromptTemplate
-from langchain.chat_models import AzureChatOpenAI
+from langchain_openai import OpenAI
 
 import dotenv
 import os
@@ -13,19 +13,15 @@ import os
 dotenv.load_dotenv()
 
 # OpenAI API configuration
-llm = AzureChatOpenAI(
-    deployment_name = "chat-gpt4",
-    openai_api_base = os.getenv("OPENAI_API_BASE"),
-    openai_api_version = os.getenv("OPENAI_API_VERSION"),
-    openai_api_key = os.getenv("OPENAI_API_KEY"),
-    openai_api_type = "azure",
-    temperature = 0
+llm = OpenAI(
+    openai_api_key="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",
+    temperature=0,
 )
 
 #Neo4j configuration
-neo4j_url = os.getenv("NEO4J_CONNECTION_URL")
-neo4j_user = os.getenv("NEO4J_USER")
-neo4j_password = os.getenv("NEO4J_PASSWORD")
+neo4j_url = "neo4j+s://82eaa59e.databases.neo4j.io"
+neo4j_user = "neo4j"
+neo4j_password = "TOA5RAvRqmFU6G7cqOBZkl5ngtlEaJaXvpqYATAl9AM"
 
 # Cypher generation prompt
 cypher_generation_template = """
@@ -41,7 +37,7 @@ schema: {schema}
 
 Examples:
 Question: Which client's projects use most of our people?
-Answer: ```MATCH (c:CLIENT)<-[:HAS_CLIENT]-(p:Project)-[:HAS_PEOPLE]->(person:Person)
+Answer: ```MATCH (c:CLIENT)<-[:hasInterest]-(p:Project)-[:HAS_PEOPLE]->(person:Person)
 RETURN c.name AS Client, COUNT(DISTINCT person) AS NumberOfPeople
 ORDER BY NumberOfPeople DESC```
 Question: Which person uses the largest number of different technologies?
@@ -75,6 +71,7 @@ qa_prompt = PromptTemplate(
 
 def query_graph(user_input):
     graph = Neo4jGraph(url=neo4j_url, username=neo4j_user, password=neo4j_password)
+    print(graph.schema)
     chain = GraphCypherQAChain.from_llm(
         llm=llm,
         graph=graph,
